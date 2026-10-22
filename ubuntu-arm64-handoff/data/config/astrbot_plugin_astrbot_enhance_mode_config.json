@@ -1,0 +1,75 @@
+﻿{
+  "group_history_enhancement": {
+    "enable": false,
+    "max_messages": 300,
+    "include_sender_id": true,
+    "include_role_tag": true,
+    "image_caption": false,
+    "image_caption_provider_id": "",
+    "image_caption_prompt": "Please describe the image using Chinese."
+  },
+  "active_reply": {
+    "enable": true,
+    "mode": "model_choice",
+    "possibility": 0.1,
+    "model_stack_size": 1,
+    "model_history_messages": 10,
+    "model_choice_provider_id": "deepseek-flash",
+    "model_choice_prompt": "你是QQ群里的“鲸鲸”。判断下面这些最近消息是否明确在跟鲸鲸说话。\n只有以下情况才输出 REPLY：\n1. 消息里叫“鲸鲸”或明显在叫她；\n2. 消息是在回复、追问鲸鲸刚才说的话；\n3. 有人向鲸鲸提问，且上下文表明是在问她。\n普通群友之间聊天、没有指向鲸鲸的消息，一律输出 SKIP。\n不要因为消息提到 AI、机器人、模型就自动 REPLY。\n\n最近消息（{stack_size} 条）：\n{messages}\n\n更早的群聊上下文（{history_count} 条）：\n{history_context}\n\n只输出 REPLY 或 SKIP。",
+    "whitelist": "866379084,napcat:GroupMessage:866379084"
+  },
+  "group_features": {
+    "react_mode_enable": false,
+    "role_display": false,
+    "mention_parse": false,
+    "ban_control_enable": false,
+    "ban_max_duration_sec": 2592000,
+    "ban_allow_admin": false,
+    "role_prompt_enable": false,
+    "role_admin_prompt": "",
+    "role_member_prompt": ""
+  },
+  "web_search": {
+    "enable": false,
+    "provider_id": "",
+    "system_prompt": "You are a web research assistant. Use live web search/browsing when answering. Return ONLY a single JSON object with keys: content (string), sources (array of objects with url/title/snippet when possible). Keep content concise and evidence-backed. IMPORTANT: Do NOT use Markdown formatting in the content field - use plain text only.",
+    "timeout_sec": 60.0,
+    "request_mode": "auto",
+    "base_url_override": "",
+    "show_sources": false,
+    "max_sources": 5
+  },
+  "browser_tool": {
+    "enable": false,
+    "command": "agent-browser",
+    "timeout_sec": 60.0,
+    "headed": false,
+    "persist_session": true,
+    "content_boundaries": true,
+    "max_output_chars": 12000,
+    "allowed_domains": "",
+    "idle_timeout_ms": 300000
+  },
+  "memory_rag": {
+    "enable": false,
+    "embedding_provider_id": "",
+    "default_recall_k": 20,
+    "max_return_results": 200
+  },
+  "memory_rag_webui": {
+    "enable": false,
+    "host": "127.0.0.1",
+    "port": 8899,
+    "access_password": "",
+    "session_timeout": 3600
+  },
+  "global_settings": {
+    "lru_cache": {
+      "max_origins": 500
+    },
+    "timeouts": {
+      "image_caption_sec": 45.0,
+      "model_choice_sec": 45.0
+    }
+  }
+}

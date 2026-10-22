@@ -1,0 +1,4 @@
+name: astrbot_plugin_safety_guard
+desc: 拦截短周期重复任务和恶意刷屏，保护定时任务权限
+author: local
+version: 0.1.0

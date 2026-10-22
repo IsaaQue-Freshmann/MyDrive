@@ -1,0 +1,47 @@
+# 鲸鲸 QQ + DeepSeek 在 Ubuntu ARM64 上的交接配置
+# 基于 NapCat-Docker 官方 astrbot compose 修改：
+# - WebUI 只绑定本机回环地址
+# - AstrBot 的 6199 不映射到宿主机，仅供 Docker 内网使用
+# - 增加时区
+#
+# 使用：
+#   cd ~/whale-bot
+#   NAPCAT_UID=$(id -u) NAPCAT_GID=$(id -g) docker compose up -d
+
+services:
+  napcat:
+    image: mlikiowa/napcat-docker:latest
+    container_name: napcat
+    restart: unless-stopped
+    environment:
+      - NAPCAT_UID=${NAPCAT_UID:-1000}
+      - NAPCAT_GID=${NAPCAT_GID:-1000}
+      - MODE=astrbot
+      - TZ=Asia/Shanghai
+    ports:
+      # 只允许服务器本机访问；远程通过 SSH 隧道
+      - "127.0.0.1:6099:6099"
+    volumes:
+      - ./data:/AstrBot/data
+      - ./napcat/config:/app/napcat/config
+      - ./ntqq:/app/.config/QQ
+    networks:
+      - astrbot_network
+
+  astrbot:
+    image: soulter/astrbot:latest
+    container_name: astrbot
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      # AstrBot WebUI 只允许服务器本机访问；远程通过 SSH 隧道
+      - "127.0.0.1:6185:6185"
+    volumes:
+      - ./data:/AstrBot/data
+    networks:
+      - astrbot_network
+
+networks:
+  astrbot_network:
+    driver: bridge
